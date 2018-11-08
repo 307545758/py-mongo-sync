@@ -1,0 +1,57 @@
+1。第一次启动全量抽取配置文件如下：
+python sync.py -f ./example/conf.toml 
+[root@aliyun-mb-welike-pre-com-05 example]# more conf.toml
+# --------
+# source configurations
+# --------
+[src]
+
+# hostportstr of a member of replica set
+hosts = "172.23.3.75:27001"
+authdb = "admin"
+username = "admin"
+password = "HpyD9KAd(JDkHRY9"
+
+# --------
+# destination configurations
+# --------
+[dst]
+
+type = "mongo" # could be "mongo" or "es"
+
+[dst.mongo]
+hosts = "172.23.3.80:27001"
+authdb = "admin"
+username = "admin"
+password = "HpyD9KAd(JDkHRY9"
+
+# --------
+# sync options
+# --------
+[sync]
+
+# sync database "test"
+[[sync.dbs]]
+db = "welike_mongo"
+
+# sync database "test0" => "renamed_test0"
+
+# sync collection "test2.coll2" => "renamed_test2.coll2"
+# with specfied fields "filed1" and "field2"
+# sync from the specfied the timestmap in seconds since 1970-01-01 00:00:00 UTC
+# for example:
+# start_optime is 1533526042 and sync from Timestamp(1533526042, 0)
+
+
+
+# --------
+# log config
+# --------
+[log]
+
+filepath = "sync.log" # write to stdout if empty or not set
+
+只要不关闭复制通道，是可以增量抽取的
+
+2.增量抽取的方法：
+python sync.py -f ./example/conf.toml --start-optime=1541595964
