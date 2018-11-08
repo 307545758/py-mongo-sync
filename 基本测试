@@ -51,7 +51,7 @@ db = "welike_mongo"
 
 filepath = "sync.log" # write to stdout if empty or not set
 
-只要不关闭复制通道，是可以增量抽取的
+只要不关闭复制通道，是可以增量抽取的，每次这样启动都是覆盖全量增量一定要指定起始点
 
 2.增量抽取的方法：
 python sync.py -f ./example/conf.toml --start-optime=1541595964
